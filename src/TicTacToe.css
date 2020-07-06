@@ -1,4 +1,4 @@
-button {
+button.square {
     background: white;
     border: 1px solid gray;
     margin-right: -1px;
@@ -6,6 +6,8 @@ button {
     width: 80px;
     height:80px;
     text-align: center;
+    vertical-align: top;
+    font-size: 40px;;
     font-weight: bold;
 }
 
@@ -14,8 +16,10 @@ button:focus {
 }
 
 button.reset {
+    margin-right: -1px;
+    margin-top: 20px;
     padding: 5px;
     font-size: 20px;
     line-height: 20px;
-    width: 100px;
+    width: 240px;
 }

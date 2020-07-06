@@ -11,7 +11,7 @@ function TicTacToe(){
 
 function Square(props){
   return (
-          <button className="square" onClick={props.onClick}>
+          <button class="square" onClick={props.onClick}>
             {props.value}
           </button>
   );
@@ -60,14 +60,15 @@ function Board(){
         //take in an index
             //return a square with the correct value and function
     return (
-    <div>
-            <div />
+        <center>
+        <div>
             <div class="status">{status}<p>{"Turn number: " + turnCount}</p></div>
             <div>{renderSquare(0)}{renderSquare(1)}{renderSquare(2)}</div>
             <div>{renderSquare(3)}{renderSquare(4)}{renderSquare(5)}</div>
             <div>{renderSquare(6)}{renderSquare(7)}{renderSquare(8)}</div>
             <button class="reset" onClick={resetBoard}>Restart Game</button>
         </div>
+        </center>
     );
 
 }
