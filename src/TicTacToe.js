@@ -18,44 +18,62 @@ function Square(props){
 }
 
 function Board(){
-    const [boardSquares, setBoardSquares] = useState(Array(9).fill(null));
+    const [history, setHistory] = useState([Array(9).fill(null)]);
     const [xIsNext, setXIsNext] = useState(true);
-    const [turnCount, setTurnCount] = useState(1);
+    const [turnCount, setTurnCount] = useState(0);
+    let status;
+    const winner = calculateWinner(history[turnCount]);
+    status = !winner && turnCount === 9 ? `Tie game` : winner === "X" || winner === "O" ? `Winner is: ${winner}` : `Next player: ${xIsNext ? "X" : "O"}`;
 
     //handleClick
-    const handleClick = index => {
+    const handleClick = (index) => {
         //copy of boardState
-        const squares = [...boardSquares];
+        const timeInHistory = history.slice(0, turnCount + 1);
+        const current = timeInHistory[turnCount];
+        const squares = [...current];
         //if the index of the board is filled, return
-        if(calculateWinner(boardSquares) || squares[index]) return;
+        if(winner || squares[index]) return;
 
         //add X or O
         squares[index] = xIsNext ?  "X" : "O";
 
         //calculate next turn
         //set the state of the board
-        setBoardSquares(squares)
+        setHistory([...timeInHistory, squares]);
         //set the state of the turn
         setXIsNext(!xIsNext);
-        setTurnCount(turnCount + 1);
+        setTurnCount(timeInHistory.length);
     };
 
     const renderSquare = (index) => {
         return (
-        <Square value={boardSquares[index]} onClick={() => handleClick(index)}/>
+        <Square value={history[turnCount][index]} onClick={() => handleClick(index)}/>
         );
     };
 
-    let status;
-    const winner = calculateWinner(boardSquares, turnCount);
-    status = !winner && turnCount === 10 ? `Tie game` : winner === "X" || winner === "O" ? `Winner is: ${winner}` : `Next player: ${xIsNext ? "X" : "O"}`;
+
+    const jumpTo = (step) => {
+        setTurnCount(step);
+        setXIsNext(step % 2 === 0);
+    };
+    
 
     function resetBoard() {
-        setBoardSquares(Array(9).fill(null));
+        setHistory([Array(9).fill(null)]);
         setXIsNext(true);
-        setTurnCount(1);
+        setTurnCount(0);
     };
 
+    const renderMoves = () => 
+        history.map((_step, move) => {
+            const destination = move ? `Go to move #${move}` : "Go to start";
+            return(
+                <li class="history-list">
+                <button onClick={() => jumpTo(move)}>{destination}</button>
+                </li>
+            );
+        });
+    
     //create a render square function
         //take in an index
             //return a square with the correct value and function
@@ -66,14 +84,15 @@ function Board(){
             <div>{renderSquare(0)}{renderSquare(1)}{renderSquare(2)}</div>
             <div>{renderSquare(3)}{renderSquare(4)}{renderSquare(5)}</div>
             <div>{renderSquare(6)}{renderSquare(7)}{renderSquare(8)}</div>
-            <button class="reset" onClick={resetBoard}>Restart Game</button>
+            <button class="reset" onClick={resetBoard}>Reset Game</button>
+            <div>{renderMoves()}</div>
         </div>
         </center>
     );
 
 }
 
-function calculateWinner(squares, turnCount){
+function calculateWinner(squares){
     //get our set of winning lines
     const winningLines = [
         [0, 1, 2],

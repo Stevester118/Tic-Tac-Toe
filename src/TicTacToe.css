@@ -18,8 +18,13 @@ button:focus {
 button.reset {
     margin-right: -1px;
     margin-top: 20px;
+    margin-bottom: 20px;
     padding: 5px;
     font-size: 20px;
     line-height: 20px;
     width: 240px;
+}
+
+li.history-list{
+    list-style-type: none;
 }
