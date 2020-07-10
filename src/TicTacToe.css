@@ -28,3 +28,7 @@ button.reset {
 li.history-list{
     list-style-type: none;
 }
+
+button.history-button{
+    margin-bottom: 5px;
+}

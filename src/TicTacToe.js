@@ -69,7 +69,7 @@ function Board(){
             const destination = move ? `Go to move #${move}` : "Go to start";
             return(
                 <li class="history-list">
-                <button onClick={() => jumpTo(move)}>{destination}</button>
+                <button class="history-button" onClick={() => jumpTo(move)}>{destination}</button>
                 </li>
             );
         });
